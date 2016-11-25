@@ -37,18 +37,18 @@ class Hitlist {
                   </svg>
                 </div>`
       }, sentimentConfig = [{
-        sentiment: "positive",
-        icon:  icons.positive,
-        range: {min: 2, max: 5}
-      }, {
-        sentiment: "neutral",
-        icon:  icons.neutral,
-        range: {min: -1, max: 1}
-      }, {
-        sentiment: "negative",
-        icon:  icons.negative,
-        range: {min: -5, max: -2}
-      }]}=options;
+      sentiment: "positive",
+      icon:  icons.positive,
+      range: {min: 2, max: 5}
+    }, {
+      sentiment: "neutral",
+      icon:  icons.neutral,
+      range: {min: -1, max: 1}
+    }, {
+      sentiment: "negative",
+      icon:  icons.negative,
+      range: {min: -5, max: -2}
+    }]}=options;
 
 
     this.source = hitlist;
@@ -58,19 +58,18 @@ class Hitlist {
     this.icons = icons;
 
     this.processHeadersConfig();
-    this.movePaginationToTheMainHeader();
+    this.movePaginationToTheMainHeader(hitlist);
     Hitlist.processSortableColumns(hitlist);
     Hitlist.processDates(hitlist);
-    Hitlist.processMainColumn();
+    this.processMainColumn();
     this.addIconsForSentiment();
 
     if(!this.source.querySelector('.aggregatedTableContainer')){
       this.fixedHeader = new TableFloatingHeader(this.source.querySelector('table'));
     } else { // hack to get pagination text and update an already initialised header since we'd need that new text on hitlist update
       this.source.querySelector('table.fixed>thead').innerHTML = this.source.querySelector('table:not(.fixed)>thead').innerHTML;
-      //var offset = this.source.querySelector('table:not(.fixed)').parentNode.offsetTop;
-      //this.scrollTo(offset,200);
-      this.fixedHeader.scrollFixed();
+      let offset = this.source.querySelector('table:not(.fixed)').parentNode.offsetTop;
+      Hitlist.scrollTo(offset,200);
     }
   }
 
@@ -80,15 +79,15 @@ class Hitlist {
    * @param {Number} to - offset from top of the page the window needs to be scrolled to
    * @param {Number} duration - auxiliary parameter to specify scroll duration and implement easing
    * */
-  scrollTo(to, duration) {
-    var start = window.pageYOffset || document.documentElement.scrollTop,
+  static scrollTo(to, duration) {
+    let start = window.pageYOffset || document.documentElement.scrollTop,
       change = to - start,
       currentTime = 0,
       increment = 20;
 
-    var animateScroll = function(){
+    let animateScroll = function(){
       currentTime += increment;
-      var val = easeInOutQuad(currentTime, start, change, duration);
+      let val = easeInOutQuad(currentTime, start, change, duration);
       window.scrollTo(0,val);
       if(currentTime < duration) {
         setTimeout(animateScroll, increment);
@@ -127,7 +126,7 @@ class Hitlist {
 
   movePaginationToTheMainHeader(source){
     let mainHeader = source.querySelector(".yui3-datatable-header.reportal-hitlist-main"),
-        title = mainHeader.innerText;
+      title = mainHeader.innerText;
     mainHeader.innerHTML="";
     let paginationText =[title,this.source.getElementsByClassName("hitlist-pagination-count")[0].innerText.replace("(","of ").slice(0,-1)].join(" ");
     let paginationElement = document.createElement("span");
