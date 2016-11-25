@@ -1,4 +1,3 @@
-import Calculator from '../Calculator';
 
 describe('Calculator', () => {
   it('should add two numbers', () => {

@@ -80,6 +80,7 @@
     padding: 5px;
     @apply var(--reportal-input);
   };
+  
   --hitlist-reportal-button:{
     -webkit-appearance: button;
     display: inline-block;
