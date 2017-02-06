@@ -26,7 +26,7 @@
   --hitlist-container:{
     padding: 0 15px;
     margin: 0 auto;
-    @apply var(--container);
+    @apply --container;
   };
 
   --hitlist-arrow-down: {
@@ -38,7 +38,7 @@
     display: block;
     height: 0;
     width: 0;
-    @apply var(--arrow-down);
+    @apply --arrow-down;
   };
 
   /* all elements must inherit this */
@@ -49,7 +49,7 @@
     transition-duration: .25s !important;
     transition-property: opacity,background-color,color,fill !important;
     transition-timing-function: ease-in-out !important;
-    @apply var(--transition);
+    @apply --transition;
   };
 
   /* icons */
@@ -78,7 +78,7 @@
     position:relative;
     z-index:1;
     padding: 5px;
-    @apply var(--reportal-input);
+    @apply --reportal-input;
   };
   
   --hitlist-reportal-button:{
@@ -99,6 +99,6 @@
     font-size: 14px;
     border-radius: var(--hitlist-border-radius,3px);
     font-weight: 400;
-    @apply var(--reportal-button);
+    @apply --reportal-button;
   };
 }
