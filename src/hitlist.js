@@ -157,7 +157,7 @@ class Hitlist {
       Hitlist.wrapComment(cell);
       //this.addDateToComment(cell, index);
       if(this.headers["categories"])
-        Hitlist.addCategoriesToComment(this.source,cell,index);
+        Hitlist.addCategoriesToComment__2(this.source,cell,index);
     });
   }
 
@@ -245,6 +245,23 @@ class Hitlist {
     categoryCard.innerText = category;
     categoryCard.classList.add("hitlist-tag");
     return categoryCard
+  }
+
+  static addCategoriesToComment__2(source,cell, index){
+    let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
+    let categoriesFiltered = [];
+    categories.forEach((category, index) => {
+      if(!categories.find((categoryInner, indexInner) => categoryInner.startsWith(category) && indexInner != index)) {
+        categoriesFiltered.push(category);
+      }
+    });
+
+    let categoriesContainer = document.createElement("div");
+    categoriesFiltered.forEach(category=>{
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(category));
+    });
+    categoriesContainer.classList.add("hitlist-tags-container");
+    cell.appendChild(categoriesContainer);
   }
 }
 
