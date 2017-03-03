@@ -10,6 +10,7 @@ class Hitlist {
 
   constructor(options) {
     let {
+      typeOfCategoriesChips,
       hitlist,
       headers,
       hitlistData,
@@ -61,7 +62,7 @@ class Hitlist {
     this.movePaginationToTheMainHeader(hitlist);
     Hitlist.processSortableColumns(hitlist);
     Hitlist.processDates(hitlist);
-    this.processMainColumn();
+    this.processMainColumn(typeOfCategoriesChips);
     this.addIconsForSentiment();
 
     if(!this.source.querySelector('.aggregatedTableContainer')){
@@ -151,13 +152,22 @@ class Hitlist {
     }
   }
 
-  processMainColumn(){
+  processMainColumn(typeOfCategoriesChips){
     let mainCells = this.source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-main");
     [].slice.call(mainCells).forEach((cell, index)=>{
       Hitlist.wrapComment(cell);
       //this.addDateToComment(cell, index);
-      if(this.headers["categories"])
-        Hitlist.addCategoriesToComment__2(this.source,cell,index);
+      if(this.headers["categories"]) {
+        switch (typeOfCategoriesChips) {
+          case 'removeMainCategories':
+            Hitlist.addCategoriesToComment__removeMainCategories(this.source, cell, index);
+            break;
+          default:
+            Hitlist.addCategoriesToComment(this.source, cell, index);
+            break;
+        }
+
+      }
     });
   }
 
@@ -247,7 +257,7 @@ class Hitlist {
     return categoryCard
   }
 
-  static addCategoriesToComment__2(source,cell, index){
+  static addCategoriesToComment__removeMainCategories(source, cell, index){
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
     let categoriesFiltered = [];
     categories.forEach((category, index) => {
