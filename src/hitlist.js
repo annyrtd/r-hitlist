@@ -288,7 +288,10 @@ class Hitlist {
       .forEach(categoryArray => Hitlist.pushCategory(main, categoryArray, separator));
 
     let categoriesContainer = document.createElement("div");
-    Hitlist.createCards(main, categoriesContainer);
+    main.forEach(item => {
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
+      Hitlist.createCards(item.children, categoriesContainer);
+    });
 
     categoriesContainer.classList.add("hitlist-tags-container");
     cell.appendChild(categoriesContainer);
@@ -311,7 +314,7 @@ class Hitlist {
 
   static createCards(main, categoriesContainer) {
     main.forEach(item => {
-      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
+      categoriesContainer.appendChild(Hitlist.createCategoryCard('...' + item.name));
       Hitlist.createCards(item.children, categoriesContainer);
     });
   }
