@@ -10,6 +10,7 @@ class Hitlist {
 
   constructor(options) {
     let {
+      separator,
       typeOfCategoriesChips,
       hitlist,
       headers,
@@ -62,7 +63,7 @@ class Hitlist {
     this.movePaginationToTheMainHeader(hitlist);
     Hitlist.processSortableColumns(hitlist);
     Hitlist.processDates(hitlist);
-    this.processMainColumn(typeOfCategoriesChips);
+    this.processMainColumn(typeOfCategoriesChips, separator);
     this.addIconsForSentiment();
 
     if(!this.source.querySelector('.aggregatedTableContainer')){
@@ -152,7 +153,7 @@ class Hitlist {
     }
   }
 
-  processMainColumn(typeOfCategoriesChips){
+  processMainColumn(typeOfCategoriesChips, separator){
     let mainCells = this.source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-main");
     [].slice.call(mainCells).forEach((cell, index)=>{
       Hitlist.wrapComment(cell);
@@ -161,6 +162,9 @@ class Hitlist {
         switch (typeOfCategoriesChips) {
           case 'removeMainCategories':
             Hitlist.addCategoriesToComment__removeMainCategories(this.source, cell, index);
+            break;
+          case 'addEllipsis':
+            Hitlist.addCategoriesToComment__addEllipsis(this.source, cell, index, separator);
             break;
           default:
             Hitlist.addCategoriesToComment(this.source, cell, index);
@@ -268,6 +272,20 @@ class Hitlist {
 
     let categoriesContainer = document.createElement("div");
     categoriesFiltered.forEach(category=>{
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(category));
+    });
+    categoriesContainer.classList.add("hitlist-tags-container");
+    cell.appendChild(categoriesContainer);
+  }
+
+
+
+  static addCategoriesToComment__addEllipsis(source, cell, index, separator){
+    let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
+    categories.map(categoryArray => categoryArray.split(separator).map(category => category.trim()));
+
+    let categoriesContainer = document.createElement("div");
+    categories.forEach(category=>{
       categoriesContainer.appendChild(Hitlist.createCategoryCard(category));
     });
     categoriesContainer.classList.add("hitlist-tags-container");
