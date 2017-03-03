@@ -312,7 +312,7 @@ class Hitlist {
   static createCards(main, categoriesContainer) {
     main.forEach(item => {
       categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
-      item.children.forEach(child => Hitlist.createCards(child, categoriesContainer));
+      Hitlist.createCards(item.children, categoriesContainer);
     });
   }
 }
