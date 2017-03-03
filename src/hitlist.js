@@ -282,7 +282,14 @@ class Hitlist {
 
   static addCategoriesToComment__addEllipsis(source, cell, index, separator){
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
-    categories.map(categoryArray => categoryArray.split(separator).map(category => category.trim()));
+    let newCategoryStructure = categories
+      .map(categoryArray => categoryArray.split(separator).map(category => category.trim()))
+      .sort((first, second) => first.length - second.length);
+
+    let main = [];
+
+    newCategoryStructure.forEach(categoryArray => pushCategory(main, categoryArray));
+    console.log(main);
 
     let categoriesContainer = document.createElement("div");
     categories.forEach(category=>{
@@ -290,6 +297,16 @@ class Hitlist {
     });
     categoriesContainer.classList.add("hitlist-tags-container");
     cell.appendChild(categoriesContainer);
+  }
+}
+
+function pushCategory(main, categoryArray) {
+  if (categoryArray.length == 1) {
+    main.push({name: categoryArray[0], children: []});
+  } else {
+    const currentCategory = categoryArray.shift();
+    const parent = main.find(cat => cat.name == currentCategory);
+    pushCategory(parent.children, categoryArray)
   }
 }
 
