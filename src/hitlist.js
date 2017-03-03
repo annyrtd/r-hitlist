@@ -289,7 +289,7 @@ class Hitlist {
     let main = [];
 
     newCategoryStructure.forEach(categoryArray => pushCategory(main, categoryArray));
-    console.log(main);
+    console.log(main); в
 
     let categoriesContainer = document.createElement("div");
     categories.forEach(category=>{
