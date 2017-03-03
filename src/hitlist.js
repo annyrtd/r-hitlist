@@ -10,7 +10,7 @@ class Hitlist {
 
   constructor(options) {
     let {
-      separator,
+      separator = ' ',
       typeOfCategoriesChips,
       hitlist,
       headers,
@@ -40,18 +40,18 @@ class Hitlist {
                 </div>`
       }, sentimentConfig = [{
       sentiment: "positive",
-      icon:  icons.positive,
+      icon: icons.positive,
       range: {min: 2, max: 5}
     }, {
       sentiment: "neutral",
-      icon:  icons.neutral,
+      icon: icons.neutral,
       range: {min: -1, max: 1}
     }, {
       sentiment: "negative",
-      icon:  icons.negative,
+      icon: icons.negative,
       range: {min: -5, max: -2}
-    }]}=options;
-
+    }]
+    }=options;
 
     this.source = hitlist;
     this.headers = headers;
@@ -66,12 +66,12 @@ class Hitlist {
     this.processMainColumn(typeOfCategoriesChips, separator);
     this.addIconsForSentiment();
 
-    if(!this.source.querySelector('.aggregatedTableContainer')){
+    if (!this.source.querySelector('.aggregatedTableContainer')) {
       this.fixedHeader = new TableFloatingHeader(this.source.querySelector('table'));
     } else { // hack to get pagination text and update an already initialised header since we'd need that new text on hitlist update
       this.source.querySelector('table.fixed>thead').innerHTML = this.source.querySelector('table:not(.fixed)>thead').innerHTML;
       let offset = this.source.querySelector('table:not(.fixed)').parentNode.offsetTop;
-      Hitlist.scrollTo(offset,200);
+      Hitlist.scrollTo(offset, 200);
     }
   }
 
@@ -87,11 +87,11 @@ class Hitlist {
       currentTime = 0,
       increment = 20;
 
-    let animateScroll = function(){
+    let animateScroll = function () {
       currentTime += increment;
       let val = easeInOutQuad(currentTime, start, change, duration);
-      window.scrollTo(0,val);
-      if(currentTime < duration) {
+      window.scrollTo(0, val);
+      if (currentTime < duration) {
         setTimeout(animateScroll, increment);
       }
     };
@@ -101,64 +101,63 @@ class Hitlist {
     //b = start value
     //c = change in value
     //d = duration
-    function easeInOutQuad (t, b, c, d) {
-      t /= d/2;
-      if (t < 1) return c/2*t*t + b;
+    function easeInOutQuad(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
       t--;
-      return -c/2 * (t*(t-2) - 1) + b;
+      return -c / 2 * (t * (t - 2) - 1) + b;
     }
   }
 
 
-
-  processHeadersConfig(){
+  processHeadersConfig() {
     [
       {type: "verbatim", postfix: "verbatim"},
       {type: "categories", postfix: "categories"},
       {type: "date", postfix: "date"},
       {type: "sentiment", postfix: "sentiment"}
-    ].forEach( type => {
+    ].forEach(type => {
       if (this.headers[type.type] && this.headers[type.type].length > 0)
-        this.headers[type.type].forEach( question =>{
-          Hitlist.addClassesToHitlist(this.source,question,type);
-          Hitlist.changeTitles(this.source,question);
+        this.headers[type.type].forEach(question => {
+          Hitlist.addClassesToHitlist(this.source, question, type);
+          Hitlist.changeTitles(this.source, question);
         })
     });
   }
 
-  movePaginationToTheMainHeader(source){
+  movePaginationToTheMainHeader(source) {
     let mainHeader = source.querySelector(".yui3-datatable-header.reportal-hitlist-main"),
       title = mainHeader.innerText;
-    mainHeader.innerHTML="";
-    let paginationText =[title,this.source.getElementsByClassName("hitlist-pagination-count")[0].innerText.replace("(","of ").slice(0,-1)].join(" ");
+    mainHeader.innerHTML = "";
+    let paginationText = [title, this.source.getElementsByClassName("hitlist-pagination-count")[0].innerText.replace("(", "of ").slice(0, -1)].join(" ");
     let paginationElement = document.createElement("span");
     paginationElement.innerText = paginationText;
     mainHeader.appendChild(paginationElement);
   }
 
-  addIconsForSentiment(){
+  addIconsForSentiment() {
     let sentimentCells = this.source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-sentiment");
-    if(sentimentCells && sentimentCells.length > 0){
-      [].slice.call(sentimentCells).forEach(cell=>this.addIconForSentiment(cell));
+    if (sentimentCells && sentimentCells.length > 0) {
+      [].slice.call(sentimentCells).forEach(cell => this.addIconForSentiment(cell));
     }
 
   }
 
-  addIconForSentiment(cell){
+  addIconForSentiment(cell) {
     let value = parseInt(cell.innerText);
-    for(let i = 0; i < this.sentimentConfig.length; i++){
-      if(value <= this.sentimentConfig[i].range.max && value >= this.sentimentConfig[i].range.min){
+    for (let i = 0; i < this.sentimentConfig.length; i++) {
+      if (value <= this.sentimentConfig[i].range.max && value >= this.sentimentConfig[i].range.min) {
         cell.innerHTML = this.sentimentConfig[i].icon ? this.sentimentConfig[i].icon : this.icons[this.sentimentConfig[i].sentiment];
       }
     }
   }
 
-  processMainColumn(typeOfCategoriesChips, separator){
+  processMainColumn(typeOfCategoriesChips, separator) {
     let mainCells = this.source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-main");
-    [].slice.call(mainCells).forEach((cell, index)=>{
+    [].slice.call(mainCells).forEach((cell, index) => {
       Hitlist.wrapComment(cell);
       //this.addDateToComment(cell, index);
-      if(this.headers["categories"]) {
+      if (this.headers["categories"]) {
         switch (typeOfCategoriesChips) {
           case 'removeMainCategories':
             Hitlist.addCategoriesToComment__removeMainCategories(this.source, cell, index);
@@ -175,7 +174,7 @@ class Hitlist {
     });
   }
 
-  static addClassesToHitlist(source,question,type) {
+  static addClassesToHitlist(source, question, type) {
     let questionCells = source.querySelectorAll(".yui3-datatable-col-" + question.name);
     [].slice.call(questionCells).forEach(item => {
         item.classList.add("reportal-hitlist-" + type.postfix);
@@ -185,19 +184,19 @@ class Hitlist {
     )
   }
 
-  static changeTitles(source, question){
-    if(question.title){
+  static changeTitles(source, question) {
+    if (question.title) {
       source.querySelector(".yui3-datatable-header.yui3-datatable-col-" + question.name).innerHTML = question.title;
     }
   }
 
 
-  static processSortableColumns(source){
+  static processSortableColumns(source) {
     let sortableColumns = source.querySelectorAll(".yui3-datatable-header.yui3-datatable-sortable-column");
-    if(sortableColumns)[].slice.call(sortableColumns).forEach( header => Hitlist.addSorting( header ));
+    if (sortableColumns) [].slice.call(sortableColumns).forEach(header => Hitlist.addSorting(header));
   }
 
-  static addSorting(header){
+  static addSorting(header) {
     let dateSortingElement = document.createElement("span");
     dateSortingElement.innerText = header.innerText;
     dateSortingElement.classList.add("sortable");
@@ -205,19 +204,19 @@ class Hitlist {
     Hitlist.toggleSorting(dateSortingElement, header);
     header.innerHTML = "";
     header.appendChild(dateSortingElement);
-    dateSortingElement.addEventListener("click",(event)=>{
+    dateSortingElement.addEventListener("click", (event) => {
       dateSortingElement.classList.add("waiting");
       dateSortingElement.classList.remove("sorted");
     });
   }
 
-  static toggleSorting(targetElement,sourceElement = targetElement){
-    if(sourceElement.classList.contains("yui3-datatable-sortable-column") && sourceElement.classList.contains("yui3-datatable-sorted")){
+  static toggleSorting(targetElement, sourceElement = targetElement) {
+    if (sourceElement.classList.contains("yui3-datatable-sortable-column") && sourceElement.classList.contains("yui3-datatable-sorted")) {
       targetElement.classList.add("sorted");
-      if( sourceElement.getAttribute("aria-sort") == "ascending" ){
+      if (sourceElement.getAttribute("aria-sort") == "ascending") {
         targetElement.classList.add("asc");
         targetElement.classList.remove("desc");
-      }else{
+      } else {
         targetElement.classList.add("desc");
         targetElement.classList.remove("asc");
       }
@@ -225,53 +224,53 @@ class Hitlist {
   }
 
 
-  static processDates(source){
+  static processDates(source) {
     let dateCells = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-date");
-    if(dateCells)[].slice.call(dateCells).forEach((cell, index)=>{
+    if (dateCells) [].slice.call(dateCells).forEach((cell, index) => {
       let date = cell.innerText;
       cell.innerHTML = "";
       let dateElement = document.createElement("div");
       dateElement.innerText = date;
       dateElement.classList.add("hitlist-date-info");
-      cell.insertBefore(dateElement,cell.firstChild);
+      cell.insertBefore(dateElement, cell.firstChild);
     });
   }
 
-  static wrapComment(cell){
+  static wrapComment(cell) {
     let comment = document.createElement("div");
     comment.innerText = cell.innerText;
     cell.innerHTML = "";
     cell.appendChild(comment)
   }
 
-  static addCategoriesToComment(source,cell, index){
+  static addCategoriesToComment(source, cell, index) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
     let categoriesContainer = document.createElement("div");
-    categories.forEach(category=>{
+    categories.forEach(category => {
       categoriesContainer.appendChild(Hitlist.createCategoryCard(category));
     });
     categoriesContainer.classList.add("hitlist-tags-container");
     cell.appendChild(categoriesContainer);
   }
 
-  static createCategoryCard(category){
+  static createCategoryCard(category) {
     let categoryCard = document.createElement("span");
     categoryCard.innerText = category;
     categoryCard.classList.add("hitlist-tag");
     return categoryCard
   }
 
-  static addCategoriesToComment__removeMainCategories(source, cell, index){
+  static addCategoriesToComment__removeMainCategories(source, cell, index) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
     let categoriesFiltered = [];
     categories.forEach((category, index) => {
-      if(!categories.find((categoryInner, indexInner) => categoryInner.startsWith(category) && indexInner != index)) {
+      if (!categories.find((categoryInner, indexInner) => categoryInner.startsWith(category) && indexInner != index)) {
         categoriesFiltered.push(category);
       }
     });
 
     let categoriesContainer = document.createElement("div");
-    categoriesFiltered.forEach(category=>{
+    categoriesFiltered.forEach(category => {
       categoriesContainer.appendChild(Hitlist.createCategoryCard(category));
     });
     categoriesContainer.classList.add("hitlist-tags-container");
@@ -279,34 +278,42 @@ class Hitlist {
   }
 
 
-
-  static addCategoriesToComment__addEllipsis(source, cell, index, separator){
+  static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
-    let newCategoryStructure = categories
-      .map(categoryArray => categoryArray.split(separator).map(category => category.trim()))
-      .sort((first, second) => first.length - second.length);
 
     let main = [];
-
-    newCategoryStructure.forEach(categoryArray => pushCategory(main, categoryArray));
-    console.log(main); в
+    categories
+      .map(categoryArray => categoryArray.split(separator).map(category => category.trim()))
+      .sort((first, second) => first.length - second.length)
+      .forEach(categoryArray => Hitlist.pushCategory(main, categoryArray, separator));
 
     let categoriesContainer = document.createElement("div");
-    categories.forEach(category=>{
-      categoriesContainer.appendChild(Hitlist.createCategoryCard(category));
-    });
+    Hitlist.createCards(main, categoriesContainer);
+
     categoriesContainer.classList.add("hitlist-tags-container");
     cell.appendChild(categoriesContainer);
   }
-}
 
-function pushCategory(main, categoryArray) {
-  if (categoryArray.length == 1) {
-    main.push({name: categoryArray[0], children: []});
-  } else {
-    const currentCategory = categoryArray.shift();
-    const parent = main.find(cat => cat.name == currentCategory);
-    pushCategory(parent.children, categoryArray)
+
+  static pushCategory(main, categoryArray, separator) {
+    if (categoryArray.length == 1) {
+      main.push({name: categoryArray[0], children: []});
+    } else {
+      const currentCategory = categoryArray.shift();
+      const parent = main.find(cat => cat.name == currentCategory);
+      if (parent) {
+        Hitlist.pushCategory(parent.children, categoryArray, separator)
+      } else {
+        main.push({name: [currentCategory, ...categoryArray].join(` ${separator} `), children: []});
+      }
+    }
+  }
+
+  static createCards(main, categoriesContainer) {
+    main.forEach(item => {
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
+      item.children.forEach(child => Hitlist.createCards(child, categoriesContainer));
+    });
   }
 }
 
