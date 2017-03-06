@@ -333,13 +333,14 @@ class Hitlist {
       .forEach(categoryObject => Hitlist.pushCategory(main, categoryObject, separator));
 
     let categoriesContainer = document.createElement("div");
+
+    categoriesContainer.classList.add("hitlist-tags-container");
+    cell.appendChild(categoriesContainer);
+
     main.forEach(item => {
       categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
       Hitlist.createCards(item.children, categoriesContainer);
     });
-
-    categoriesContainer.classList.add("hitlist-tags-container");
-    cell.appendChild(categoriesContainer);
   }
 
   static pushCategory(main, categoryObject, separator) {
@@ -372,6 +373,13 @@ class Hitlist {
       let shortWidth;
       let longWidth;
 
+      shortWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+      categoryCard.innerText = item.fullName;
+      longWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+      categoryCard.innerText = `...${item.name}`;
+      categoryCard.style.transition = 'width .3s ease-in-out';
+      console.log(shortWidth, longWidth);
+
       categoryCard.onmouseover = () => {
         categoryCard.innerText = item.fullName;
         categoryCard.style.width = longWidth;
@@ -383,12 +391,6 @@ class Hitlist {
         categoryCard.style.width = shortWidth;
       };
 
-      shortWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
-      categoryCard.innerText = item.fullName;
-      longWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
-      categoryCard.innerText = `...${item.name}`;
-      categoryCard.style.transition = 'width .3s ease-in-out';
-      console.log(shortWidth, longWidth);
       Hitlist.createCards(item.children, categoriesContainer);
     });
   }
