@@ -368,20 +368,27 @@ class Hitlist {
     main.forEach(item => {
       const categoryCard = Hitlist.createCategoryCard(`...${item.name}`);
 
+      let shortWidth;
+      let longWidth;
+
       categoryCard.onmouseover = () => {
-        categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+        categoryCard.style.width = shortWidth;
         categoryCard.innerText = item.fullName;
-        categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+        if (!longWidth) {
+          longWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+        }
+        categoryCard.style.width = longWidth;
+
       };
 
       categoryCard.onmouseout = () => {
-        categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+        categoryCard.style.width = longWidth;
         categoryCard.innerText = `...${item.name}`;
-        categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+        categoryCard.style.width = shortWidth;
       };
 
       categoriesContainer.appendChild(categoryCard);
-      categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+      shortWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
       Hitlist.createCards(item.children, categoriesContainer);
     });
   }
