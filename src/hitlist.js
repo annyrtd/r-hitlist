@@ -165,6 +165,9 @@ class Hitlist {
           case 'addEllipsis':
             Hitlist.addCategoriesToComment__addEllipsis(this.source, cell, index, separator);
             break;
+          case 'tree':
+            Hitlist.addCategoriesToComment__tree(this.source, cell, index, separator);
+            break;
           default:
             Hitlist.addCategoriesToComment(this.source, cell, index);
             break;
@@ -277,13 +280,12 @@ class Hitlist {
     cell.appendChild(categoriesContainer);
   }
 
-
-  static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
+  /*static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
-
     let main = [];
+
     categories
-      .map(categoryArray => categoryArray.split(separator).map(category => category.trim()))
+      .map(fullNameCategory => fullNameCategory.split(separator).map(category => category.trim()))
       .sort((first, second) => first.length - second.length)
       .forEach(categoryArray => Hitlist.pushCategory(main, categoryArray, separator));
 
@@ -296,7 +298,6 @@ class Hitlist {
     categoriesContainer.classList.add("hitlist-tags-container");
     cell.appendChild(categoriesContainer);
   }
-
 
   static pushCategory(main, categoryArray, separator) {
     if (categoryArray.length == 1) {
@@ -314,9 +315,84 @@ class Hitlist {
 
   static createCards(main, categoriesContainer) {
     main.forEach(item => {
-      categoriesContainer.appendChild(Hitlist.createCategoryCard('...' + item.name));
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(`...${item.name}`));
       Hitlist.createCards(item.children, categoriesContainer);
     });
+  }*/
+
+  static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
+    let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
+    let main = [];
+
+    categories
+      .map(fullNameCategory => ({
+        fullNameCategory,
+        categories: fullNameCategory.split(separator).map(category => category.trim())
+      }))
+      .sort((first, second) => first.categories.length - second.categories.length)
+      .forEach(categoryObject => Hitlist.pushCategory(main, categoryObject, separator));
+
+    let categoriesContainer = document.createElement("div");
+    main.forEach(item => {
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
+      Hitlist.createCards(item.children, categoriesContainer);
+    });
+
+    categoriesContainer.classList.add("hitlist-tags-container");
+    cell.appendChild(categoriesContainer);
+  }
+
+  static pushCategory(main, categoryObject, separator) {
+    if (categoryObject.categories.length == 1) {
+      main.push({
+        name: categoryObject.categories[0],
+        fullName: categoryObject.fullNameCategory,
+        children: []
+      });
+    } else {
+      const currentCategory = categoryObject.categories.shift();
+      const parent = main.find(cat => cat.name == currentCategory);
+      if (parent) {
+        Hitlist.pushCategory(parent.children, categoryObject, separator)
+      } else {
+        main.push({
+          name: [currentCategory, ...categoryObject.categories].join(` ${separator} `),
+          fullName: categoryObject.fullNameCategory,
+          children: []
+        });
+      }
+    }
+  }
+
+  static createCards(main, categoriesContainer) {
+    main.forEach(item => {
+      const categoryCard = Hitlist.createCategoryCard(`...${item.name}`);
+      categoryCard.onmouseover = () => categoryCard.innerText = item.fullNameCategory;
+      categoryCard.onmouseout = () => categoryCard.innerText = item.name;
+
+      categoriesContainer.appendChild(categoryCard);
+      Hitlist.createCards(item.children, categoriesContainer);
+    });
+  }
+
+
+  static addCategoriesToComment__tree(source, cell, index, separator) {
+    let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
+
+    let main = [];
+    categories
+      .map(categoryArray => categoryArray.split(separator).map(category => category.trim()))
+      .sort((first, second) => first.length - second.length)
+      .forEach(categoryArray => Hitlist.pushCategory(main, categoryArray, separator));
+
+    let categoriesContainer = document.createElement("div");
+    main.forEach(item => {
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
+      Hitlist.createCards(item.children, categoriesContainer);
+    });
+
+    categoriesContainer.classList.add("hitlist-tags-container");
+    cell.appendChild(categoriesContainer);
   }
 }
 
