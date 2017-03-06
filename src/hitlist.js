@@ -367,7 +367,7 @@ class Hitlist {
   static createCards(main, categoriesContainer) {
     main.forEach(item => {
       const categoryCard = Hitlist.createCategoryCard(`...${item.name}`);
-      categoryCard.onmouseover = () => categoryCard.innerText = item.fullNameCategory;
+      categoryCard.onmouseover = () => categoryCard.innerText = item.fullName;
       categoryCard.onmouseout = () => categoryCard.innerText = item.name;
 
       categoriesContainer.appendChild(categoryCard);
