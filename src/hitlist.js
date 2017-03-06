@@ -367,8 +367,16 @@ class Hitlist {
   static createCards(main, categoriesContainer) {
     main.forEach(item => {
       const categoryCard = Hitlist.createCategoryCard(`...${item.name}`);
-      categoryCard.onmouseover = () => categoryCard.innerText = item.fullName;
-      categoryCard.onmouseout = () => categoryCard.innerText = `...${item.name}`;
+
+      categoryCard.onmouseover = () => {
+        categoryCard.innerText = item.fullName;
+        categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+      };
+
+      categoryCard.onmouseout = () => {
+        categoryCard.innerText = `...${item.name}`;
+        categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+      };
 
       categoriesContainer.appendChild(categoryCard);
       Hitlist.createCards(item.children, categoriesContainer);
