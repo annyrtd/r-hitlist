@@ -373,22 +373,23 @@ class Hitlist {
 
       categoryCard.onmouseover = () => {
         categoryCard.style.width = shortWidth;
-        categoryCard.innerText = item.fullName;
-        if (!longWidth) {
-          longWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
-        }
         categoryCard.style.width = longWidth;
+        categoryCard.innerText = item.fullName;
 
       };
 
       categoryCard.onmouseout = () => {
         categoryCard.style.width = longWidth;
-        categoryCard.innerText = `...${item.name}`;
         categoryCard.style.width = shortWidth;
+        categoryCard.innerText = `...${item.name}`;
       };
 
       categoriesContainer.appendChild(categoryCard);
       shortWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+      categoryCard.innerText = item.fullName;
+      longWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
+      categoryCard.innerText = `...${item.name}`;
+      categoryCard.style.transition = 'width .3s ease-in-out';
       Hitlist.createCards(item.children, categoriesContainer);
     });
   }
