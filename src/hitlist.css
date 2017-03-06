@@ -1,4 +1,5 @@
 @import "./variables.css";
+@import "./hitlist-tags.css";
 
 .reportal-hitlist-container .hitlist .yui3-datatable-table {
   border: none !important;
@@ -304,9 +305,6 @@
   white-space: normal !important;
 }
 
-
-
-
 .hitlist-nav-button,.hitlist-nav-page{
   @apply --hitlist-reportal-button;
   background-image: none !important;
@@ -321,3 +319,5 @@
     text-decoration:none;
   }
 }
+
+

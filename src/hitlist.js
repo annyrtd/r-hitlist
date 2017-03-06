@@ -338,7 +338,7 @@ class Hitlist {
     cell.appendChild(categoriesContainer);
 
     main.forEach(item => {
-      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
+      categoriesContainer.appendChild(Hitlist.createCategoryDiv('', item.name));
       Hitlist.createCards(item.children, categoriesContainer);
     });
   }
@@ -367,32 +367,22 @@ class Hitlist {
 
   static createCards(main, categoriesContainer) {
     main.forEach(item => {
-      const categoryCard = Hitlist.createCategoryCard(`...${item.name}`);
+      const categoryCard = Hitlist.createCategoryDiv(item.fullName.replace(item.name, ''), `...${item.name}`);
       categoriesContainer.appendChild(categoryCard);
-
-      let shortWidth;
-      let longWidth;
-
-      shortWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
-      categoryCard.innerText = item.fullName;
-      longWidth = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
-      categoryCard.innerText = `...${item.name}`;
-      categoryCard.style.transition = 'width .3s ease-in-out';
-      console.log(shortWidth, longWidth);
-
-      categoryCard.onmouseover = () => {
-        categoryCard.innerText = item.fullName;
-        categoryCard.style.width = longWidth;
-
-      };
-
-      categoryCard.onmouseout = () => {
-        categoryCard.innerText = `...${item.name}`;
-        categoryCard.style.width = shortWidth;
-      };
-
       Hitlist.createCards(item.children, categoriesContainer);
     });
+  }
+
+  static createCategoryDiv(mainCategoty, category) {
+    let categoryDiv = document.createElement("div");
+    categoryDiv.classList.add("hitlist-tag-container");
+    let categoryCard1 = document.createElement("span");
+    categoryCard1.innerText = mainCategoty;
+    let categoryCard2 = document.createElement("span");
+    categoryCard2.innerText = category;
+    categoryDiv.appendChild(categoryCard1);
+    categoryDiv.appendChild(categoryCard2);
+    return categoryDiv
   }
 
 
