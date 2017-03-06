@@ -369,16 +369,19 @@ class Hitlist {
       const categoryCard = Hitlist.createCategoryCard(`...${item.name}`);
 
       categoryCard.onmouseover = () => {
+        categoryCard.style.width = '';
         categoryCard.innerText = item.fullName;
         categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
       };
 
       categoryCard.onmouseout = () => {
+        categoryCard.style.width = '';
         categoryCard.innerText = `...${item.name}`;
         categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
       };
 
       categoriesContainer.appendChild(categoryCard);
+      categoryCard.style.width = window.getComputedStyle(categoryCard, null).getPropertyValue("width");
       Hitlist.createCards(item.children, categoriesContainer);
     });
   }
