@@ -367,7 +367,7 @@ class Hitlist {
 
   static createCards(main, categoriesContainer) {
     main.forEach(item => {
-      const categoryCard = Hitlist.createCategoryDiv(item.fullName.replace(item.name, ''), `...${item.name}`);
+      const categoryCard = Hitlist.createCategoryDiv(item.fullName.replace(item.name, ''), item.name);
       categoriesContainer.appendChild(categoryCard);
       Hitlist.createCards(item.children, categoriesContainer);
     });
