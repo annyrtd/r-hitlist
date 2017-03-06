@@ -375,7 +375,8 @@ class Hitlist {
 
   static createCategoryDiv(mainCategoty, category) {
     let categoryDiv = document.createElement("div");
-    categoryDiv.classList.add("hitlist-tag hitlist-tag-container");
+    categoryDiv.classList.add("hitlist-tag");
+    categoryDiv.classList.add("hitlist-tag-container");
     let categoryCard1 = document.createElement("span");
     categoryCard1.innerText = mainCategoty;
     let categoryCard2 = document.createElement("span");
