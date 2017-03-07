@@ -1,5 +1,5 @@
-.hitlist-tag-container {
-  display: inline-flex;
+div.hitlist-tag-container {
+  display: flex;
 
   & span:first-child {
     width: 10px;
