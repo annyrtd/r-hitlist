@@ -280,7 +280,7 @@ class Hitlist {
     cell.appendChild(categoriesContainer);
   }
 
-  /*static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
+  static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
     let main = [];
 
@@ -318,9 +318,9 @@ class Hitlist {
       categoriesContainer.appendChild(Hitlist.createCategoryCard(`...${item.name}`));
       Hitlist.createCards(item.children, categoriesContainer);
     });
-  }*/
+  }
 
-  static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
+  /*static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
     let main = [];
 
@@ -384,7 +384,7 @@ class Hitlist {
     categoryDiv.appendChild(categoryCard1);
     categoryDiv.appendChild(categoryCard2);
     return categoryDiv
-  }
+  }*/
 
 
   static addCategoriesToComment__tree(source, cell, index, separator) {
