@@ -282,7 +282,7 @@
     border: solid 1px var(--hitlist-divider-color);
     background-color: var(--hitlist-primary-background-color);
     font-size: 12px;
-    display: inline-block;
+    display: flex;
   }
 
   & .hitlist-nav-prev.disabled,
