@@ -165,6 +165,9 @@ class Hitlist {
           case 'addEllipsis':
             Hitlist.addCategoriesToComment__addEllipsis(this.source, cell, index, separator);
             break;
+          case 'addEllipsisWithHover':
+            Hitlist.addCategoriesToComment__addEllipsisWithHover(this.source, cell, index, separator);
+            break;
           case 'tree':
             Hitlist.addCategoriesToComment__tree(this.source, cell, index, separator);
             break;
@@ -320,7 +323,7 @@ class Hitlist {
     });
   }
 
-  /*static addCategoriesToComment__addEllipsis(source, cell, index, separator) {
+  static addCategoriesToComment__addEllipsisWithHover(source, cell, index, separator) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
     let main = [];
 
@@ -330,7 +333,7 @@ class Hitlist {
         categories: fullNameCategory.split(separator).map(category => category.trim())
       }))
       .sort((first, second) => first.categories.length - second.categories.length)
-      .forEach(categoryObject => Hitlist.pushCategory(main, categoryObject, separator));
+      .forEach(categoryObject => Hitlist.pushCategory_addEllipsisWithHover(main, categoryObject, separator));
 
     let categoriesContainer = document.createElement("div");
 
@@ -339,11 +342,11 @@ class Hitlist {
 
     main.forEach(item => {
       categoriesContainer.appendChild(Hitlist.createCategoryDiv('', item.name));
-      Hitlist.createCards(item.children, categoriesContainer);
+      Hitlist.createCards_addEllipsisWithHover(item.children, categoriesContainer);
     });
   }
 
-  static pushCategory(main, categoryObject, separator) {
+  static pushCategory_addEllipsisWithHover(main, categoryObject, separator) {
     if (categoryObject.categories.length == 1) {
       main.push({
         name: categoryObject.categories[0],
@@ -354,7 +357,7 @@ class Hitlist {
       const currentCategory = categoryObject.categories.shift();
       const parent = main.find(cat => cat.name == currentCategory);
       if (parent) {
-        Hitlist.pushCategory(parent.children, categoryObject, separator)
+        Hitlist.pushCategory_addEllipsisWithHover(parent.children, categoryObject, separator)
       } else {
         main.push({
           name: [currentCategory, ...categoryObject.categories].join(` ${separator} `),
@@ -365,11 +368,11 @@ class Hitlist {
     }
   }
 
-  static createCards(main, categoriesContainer) {
+  static createCards_addEllipsisWithHover(main, categoriesContainer) {
     main.forEach(item => {
       const categoryCard = Hitlist.createCategoryDiv(item.fullName.replace(item.name, ''), item.name);
       categoriesContainer.appendChild(categoryCard);
-      Hitlist.createCards(item.children, categoriesContainer);
+      Hitlist.createCards_addEllipsisWithHover(item.children, categoriesContainer);
     });
   }
 
@@ -384,7 +387,7 @@ class Hitlist {
     categoryDiv.appendChild(categoryCard1);
     categoryDiv.appendChild(categoryCard2);
     return categoryDiv
-  }*/
+  }
 
 
   static addCategoriesToComment__tree(source, cell, index, separator) {
