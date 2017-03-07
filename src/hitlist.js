@@ -341,7 +341,7 @@ class Hitlist {
     cell.appendChild(categoriesContainer);
 
     main.forEach(item => {
-      categoriesContainer.appendChild(Hitlist.createCategoryDiv('', item.name));
+      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
       Hitlist.createCards_addEllipsisWithHover(item.children, categoriesContainer);
     });
   }

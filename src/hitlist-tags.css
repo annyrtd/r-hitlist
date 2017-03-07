@@ -7,5 +7,12 @@
     text-overflow: ellipsis;
     transition: 0.5s width ease-in-out;
     white-space: nowrap;
+    display: block;
   }
+}
+
+
+.hitlist-tags-container {
+  display: flex;
+  flex-wrap: wrap;
 }
