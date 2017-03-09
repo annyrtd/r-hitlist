@@ -396,20 +396,29 @@ class Hitlist {
     let categoryDiv = document.createElement("div");
     categoryDiv.classList.add("hitlist-tag");
     categoryDiv.classList.add("hitlist-tag-container");
-    categoryDiv.appendChild(categoryCardOuter);
+    categoryDiv.appendChild(mainCategoryCard);
     categoryDiv.appendChild(categoryCard);
 
-    categoryDiv.onmouseover = () => {
+    /*categoryDiv.onmouseover = () => {
       categoryDots.style.width = '0px';
       categoryDots.style.display = 'none';
-      categoryCardOuter.style.width = (mainCategoryCard.clientWidth + 6) + 'px';
+      categoryCardOuter.style.width = (mainCategoryCard.clientWidth + 5) + 'px';
     };
 
     categoryDiv.onmouseout = () => {
       categoryDots.style.width = '12px';
       categoryCardOuter.style.width = '12px';
       categoryDots.style.display = '';
+    };*/
+
+    mainCategoryCard.onmouseout = () => {
+      mainCategoryCard.style.width = '100px';
     };
+
+    mainCategoryCard.onmouseover = () => {
+      mainCategoryCard.style.width = '';
+    };
+
 
     return categoryDiv
   }
