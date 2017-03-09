@@ -414,7 +414,7 @@ class Hitlist {
     newElement.style.fontSize = '12px'; //styles.getPropertyValue('font-size');
 
     document.body.appendChild(newElement);
-    const width = newElement.clientWidth + 'px';
+    const width = (newElement.clientWidth + 5) + 'px';
     document.body.removeChild(newElement);
 
     return width;
