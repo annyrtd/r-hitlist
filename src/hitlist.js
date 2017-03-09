@@ -400,14 +400,14 @@ class Hitlist {
 
     categoryDiv.onmouseover = () => {
       categoryDots.style.width = '0px';
-      categoryDots.style.overflow = 'hidden';
+      categoryDots.style.display = 'none';
       categoryCardOuter.style.width = (mainCategoryCard.clientWidth + 8) + 'px';
     };
 
     categoryDiv.onmouseout = () => {
       categoryDots.style.width = '12px';
       categoryCardOuter.style.width = '12px';
-      categoryDots.style.overflow = '';
+      categoryDots.style.display = '';
     };
 
     return categoryDiv
