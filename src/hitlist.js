@@ -455,7 +455,7 @@ class Hitlist {
   static createCardsWithLevel(main, categoriesContainer) {
     main.forEach(item => {
       const categoryCard = Hitlist.createCategoryCard(`${item.name}`);
-      categoryCard.style.paddingLeft = (20 * item.level) + 'px';
+      categoryCard.style.marginLeft = (20 * item.level) + 'px';
       categoriesContainer.appendChild(categoryCard);
       Hitlist.createCardsWithLevel(item.children, categoriesContainer);
     });
