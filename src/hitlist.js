@@ -377,15 +377,30 @@ class Hitlist {
   }
 
   static createCategoryDiv(mainCategoty, category) {
+    let categoryCard1 = document.createElement("span");
+    categoryCard1.innerText = mainCategoty;
+
+    let categoryCardOuter = document.createElement("span");
+    categoryCardOuter.innerText = '...';
+    categoryCardOuter.appendChild(categoryCard1);
+
+    let categoryCard2 = document.createElement("span");
+    categoryCard2.innerText = category;
+
     let categoryDiv = document.createElement("div");
     categoryDiv.classList.add("hitlist-tag");
     categoryDiv.classList.add("hitlist-tag-container");
-    let categoryCard1 = document.createElement("span");
-    categoryCard1.innerText = mainCategoty;
-    let categoryCard2 = document.createElement("span");
-    categoryCard2.innerText = category;
     categoryDiv.appendChild(categoryCard1);
     categoryDiv.appendChild(categoryCard2);
+
+    categoryDiv.onmouseover = () => {
+      categoryDiv.childNodes[0].style.width =  categoryDiv.childNodes[0].childNodes[0].clientWidth;
+    };
+
+    categoryDiv.onmouseout = () => {
+      categoryDiv.childNodes[0].style.width = '10px';
+    };
+
     return categoryDiv
   }
 
