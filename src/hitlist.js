@@ -379,6 +379,7 @@ class Hitlist {
   static createCategoryDiv(mainCategoty, category) {
     let categoryDots = document.createElement("span");
     categoryDots.innerText = '...';
+    categoryDots.style.width = '12px';
 
     let mainCategoryCard = document.createElement("span");
     mainCategoryCard.innerText = mainCategoty;
@@ -386,6 +387,7 @@ class Hitlist {
     let categoryCardOuter = document.createElement("span");
     categoryCardOuter.appendChild(categoryDots);
     categoryCardOuter.appendChild(mainCategoryCard);
+    categoryCardOuter.style.width = '12px';
 
     let categoryCard = document.createElement("span");
     categoryCard.innerText = category;
@@ -398,7 +400,7 @@ class Hitlist {
 
     categoryDiv.onmouseover = () => {
       categoryDots.style.width = '0px';
-      categoryCardOuter.style.width = mainCategoryCard.clientWidth;
+      categoryCardOuter.style.width = mainCategoryCard.clientWidth + 'px';
     };
 
     categoryDiv.onmouseout = () => {
