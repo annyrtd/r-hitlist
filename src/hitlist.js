@@ -397,13 +397,13 @@ class Hitlist {
     categoryDiv.appendChild(categoryCard);
 
     categoryDiv.onmouseover = () => {
-      categoryDiv.childNodes[0].childNodes[0].style.width = '0px';
-      categoryDiv.childNodes[0].style.width = categoryDiv.childNodes[0].childNodes[1].clientWidth;
+      categoryDots.style.width = '0px';
+      categoryCardOuter.style.width = mainCategoryCard.clientWidth;
     };
 
     categoryDiv.onmouseout = () => {
-      categoryDiv.childNodes[0].childNodes[0].style.width = '12px';
-      categoryDiv.childNodes[0].style.width = '';
+      categoryDots.style.width = '12px';
+      categoryCardOuter.style.width = '12px';
     };
 
     return categoryDiv
