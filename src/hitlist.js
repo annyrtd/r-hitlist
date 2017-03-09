@@ -390,7 +390,7 @@ class Hitlist {
     let categoryDiv = document.createElement("div");
     categoryDiv.classList.add("hitlist-tag");
     categoryDiv.classList.add("hitlist-tag-container");
-    categoryDiv.appendChild(categoryCard1);
+    categoryDiv.appendChild(categoryCardOuter);
     categoryDiv.appendChild(categoryCard2);
 
     categoryDiv.onmouseover = () => {
