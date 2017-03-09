@@ -1,11 +1,17 @@
 div.hitlist-tag-container {
 
-  & span:first-child {
-    width: 10px;
+  & > span:first-child {
+    width: 12px;
     overflow: hidden;
     transition: 0.5s width ease-in-out;
     white-space: nowrap;
-    display: block;
+    display: flex;
+
+    & > span {
+      display: block;
+      transition: 0.5s width ease-in-out;
+      overflow: hidden;
+    }
   }
 }
 
