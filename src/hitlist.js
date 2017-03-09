@@ -377,18 +377,9 @@ class Hitlist {
   }
 
   static createCategoryDiv(mainCategoty, category) {
-    let categoryDots = document.createElement("span");
-    categoryDots.innerText = '...';
-    categoryDots.style.width = '12px';
-    categoryDots.style.overflow = 'visible';
 
     let mainCategoryCard = document.createElement("span");
     mainCategoryCard.innerText = mainCategoty;
-
-    let categoryCardOuter = document.createElement("span");
-    categoryCardOuter.appendChild(categoryDots);
-    categoryCardOuter.appendChild(mainCategoryCard);
-    categoryCardOuter.style.width = '12px';
 
     let categoryCard = document.createElement("span");
     categoryCard.innerText = category;
@@ -399,28 +390,33 @@ class Hitlist {
     categoryDiv.appendChild(mainCategoryCard);
     categoryDiv.appendChild(categoryCard);
 
-    /*categoryDiv.onmouseover = () => {
-      categoryDots.style.width = '0px';
-      categoryDots.style.display = 'none';
-      categoryCardOuter.style.width = (mainCategoryCard.clientWidth + 5) + 'px';
+    mainCategoryCard.onmouseover = () => {
+      mainCategoryCard.style.width = Hitlist.getWidth(mainCategoryCard);
     };
-
-    categoryDiv.onmouseout = () => {
-      categoryDots.style.width = '12px';
-      categoryCardOuter.style.width = '12px';
-      categoryDots.style.display = '';
-    };*/
 
     mainCategoryCard.onmouseout = () => {
-      mainCategoryCard.style.width = '100px';
-    };
-
-    mainCategoryCard.onmouseover = () => {
       mainCategoryCard.style.width = '';
     };
 
 
     return categoryDiv
+  }
+
+  static getWidth(element) {
+    const styles = window.getComputedStyle(element, null);
+
+    const newElement = element.cloneNode(true);
+    newElement.style.position = 'absolute';
+    newElement.style.top = 0;
+    newElement.style.left = '-1000px';
+    newElement.style.fontFamily = styles.getPropertyValue('font-family');
+    newElement.style.fontSize = styles.getPropertyValue('font-size');
+
+    document.body.appendChild(newElement);
+    const width = newElement.clientWidth + 'px';
+    document.body.removeChild(newElement);
+
+    return width;
   }
 
 
