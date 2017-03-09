@@ -370,7 +370,7 @@ class Hitlist {
 
   static createCards_addEllipsisWithHover(main, categoriesContainer) {
     main.forEach(item => {
-      const categoryCard = Hitlist.createCategoryDiv(item.fullName.replace(item.name, ''), item.name);
+      const categoryCard = Hitlist.createCategoryDiv(item.fullName.substring(0, item.fullName.length - item.name.length), item.name);
       categoriesContainer.appendChild(categoryCard);
       Hitlist.createCards_addEllipsisWithHover(item.children, categoriesContainer);
     });
