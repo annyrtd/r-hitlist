@@ -428,16 +428,37 @@ class Hitlist {
     categories
       .map(categoryArray => categoryArray.split(separator).map(category => category.trim()))
       .sort((first, second) => first.length - second.length)
-      .forEach(categoryArray => Hitlist.pushCategory(main, categoryArray, separator));
+      .forEach(categoryArray => Hitlist.pushCategoryWithLevel(main, categoryArray, separator, 0));
 
     let categoriesContainer = document.createElement("div");
-    main.forEach(item => {
-      categoriesContainer.appendChild(Hitlist.createCategoryCard(item.name));
-      Hitlist.createCards(item.children, categoriesContainer);
-    });
+    Hitlist.createCardsWithLevel(main, categoriesContainer);
 
     categoriesContainer.classList.add("hitlist-tags-container");
+    categoriesContainer.classList.add("hitlist-tags-container--column");
     cell.appendChild(categoriesContainer);
+  }
+
+  static pushCategoryWithLevel(main, categoryArray, separator, level) {
+    if (categoryArray.length == 1) {
+      main.push({name: categoryArray[0], children: [], level});
+    } else {
+      const currentCategory = categoryArray.shift();
+      const parent = main.find(cat => cat.name == currentCategory);
+      if (parent) {
+        Hitlist.pushCategoryWithLevel(parent.children, categoryArray, separator, level + 1)
+      } else {
+        main.push({name: [currentCategory, ...categoryArray].join(` ${separator} `), children: [], level});
+      }
+    }
+  }
+
+  static createCardsWithLevel(main, categoriesContainer) {
+    main.forEach(item => {
+      const categoryCard = Hitlist.createCategoryCard(`${item.name}`);
+      categoryCard.style.paddingLeft = (20 * item.level) + 'px';
+      categoriesContainer.appendChild(categoryCard);
+      Hitlist.createCardsWithLevel(item.children, categoriesContainer);
+    });
   }
 }
 
