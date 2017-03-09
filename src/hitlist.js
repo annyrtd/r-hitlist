@@ -390,11 +390,11 @@ class Hitlist {
     categoryDiv.appendChild(mainCategoryCard);
     categoryDiv.appendChild(categoryCard);
 
-    mainCategoryCard.onmouseover = () => {
+    categoryDiv.onmouseover = () => {
       mainCategoryCard.style.width = width;
     };
 
-    mainCategoryCard.onmouseout = () => {
+    categoryDiv.onmouseout = () => {
       mainCategoryCard.style.width = '';
     };
 
@@ -403,14 +403,15 @@ class Hitlist {
   }
 
   static getWidth(element) {
-    const styles = window.getComputedStyle(element, null);
+    //const styles = window.getComputedStyle(element, null);
 
     const newElement = element.cloneNode(true);
     newElement.style.position = 'absolute';
     newElement.style.top = 0;
     newElement.style.left = '-1000px';
-    newElement.style.fontFamily = styles.getPropertyValue('font-family');
-    newElement.style.fontSize = styles.getPropertyValue('font-size');
+    // TODO: count these things from element
+    newElement.style.fontFamily = 'verdana, arial, sans-serif'; //styles.getPropertyValue('font-family');
+    newElement.style.fontSize = '12px'; //styles.getPropertyValue('font-size');
 
     document.body.appendChild(newElement);
     const width = newElement.clientWidth + 'px';
