@@ -380,6 +380,7 @@ class Hitlist {
     let categoryDots = document.createElement("span");
     categoryDots.innerText = '...';
     categoryDots.style.width = '12px';
+    categoryDots.style.overflow = 'visible';
 
     let mainCategoryCard = document.createElement("span");
     mainCategoryCard.innerText = mainCategoty;
@@ -401,7 +402,7 @@ class Hitlist {
     categoryDiv.onmouseover = () => {
       categoryDots.style.width = '0px';
       categoryDots.style.display = 'none';
-      categoryCardOuter.style.width = (mainCategoryCard.clientWidth + 8) + 'px';
+      categoryCardOuter.style.width = (mainCategoryCard.clientWidth + 6) + 'px';
     };
 
     categoryDiv.onmouseout = () => {
