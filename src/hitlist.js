@@ -377,21 +377,21 @@ class Hitlist {
   }
 
   static createCategoryDiv(mainCategoty, category) {
-
-    let mainCategoryCard = document.createElement("span");
+    const mainCategoryCard = document.createElement("span");
     mainCategoryCard.innerText = mainCategoty;
+    const width = Hitlist.getWidth(mainCategoryCard);
 
-    let categoryCard = document.createElement("span");
+    const categoryCard = document.createElement("span");
     categoryCard.innerText = category;
 
-    let categoryDiv = document.createElement("div");
+    const categoryDiv = document.createElement("div");
     categoryDiv.classList.add("hitlist-tag");
     categoryDiv.classList.add("hitlist-tag-container");
     categoryDiv.appendChild(mainCategoryCard);
     categoryDiv.appendChild(categoryCard);
 
     mainCategoryCard.onmouseover = () => {
-      mainCategoryCard.style.width = Hitlist.getWidth(mainCategoryCard);
+      mainCategoryCard.style.width = width;
     };
 
     mainCategoryCard.onmouseout = () => {
