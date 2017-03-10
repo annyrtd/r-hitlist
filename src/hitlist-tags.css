@@ -26,6 +26,7 @@ div.hitlist-tag-container {
 }
 
 .hitlist-tag {
+  padding-left: 24px !important;
   white-space: nowrap;
 }
 
@@ -41,10 +42,10 @@ div.hitlist-tag-container {
   content: '';
   position: absolute;
   top: 8px;
-  left: 7px;
+  left: 8px;
   width: 0;
   height: 0;
-  border-color: var(--hitlist-secondary-text-color) transparent transparent;
+  border-color: var(--hitlist-dark-primary-color) transparent transparent;
   border-style: solid;
   border-width: 5px 5px 0;
 }
@@ -56,6 +57,6 @@ div.hitlist-tag-container {
   border: 1px solid #ccc;
   border-radius: 50%;
   position: absolute;
-  top: 33%;
-  left: 30%;
+  top: 8px;
+  left: 8px;
 }
