@@ -440,7 +440,7 @@ class Hitlist {
 
       const children = Hitlist.createCardsWithLevel(category.children);
       children.forEach(child => {
-        child.classList.add('hidden');
+        child.classList.add('hidden-category');
         groupContainer.appendChild(child)
       });
       categoriesContainer.appendChild(groupContainer);
@@ -448,7 +448,7 @@ class Hitlist {
       mainCategoryCard.onclick = (e) => {
         [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
           if (item !== mainCategoryCard) {
-            item.classList.toggle('hidden');
+            item.classList.toggle('hidden-category');
           }
         });
       }

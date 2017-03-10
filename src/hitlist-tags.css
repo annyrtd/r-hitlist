@@ -29,8 +29,8 @@ div.hitlist-tag-container {
   white-space: nowrap;
 }
 
-.hidden {
-  display: none;
+.hidden-category {
+  display: none !important;
 }
 
 .main-category-card {
