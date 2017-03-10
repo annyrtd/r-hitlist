@@ -434,10 +434,24 @@ class Hitlist {
     main.forEach(category => {
       const groupContainer = document.createElement("div");
       groupContainer.classList.add("hitlist-tags-group");
-      groupContainer.appendChild(Hitlist.createCategoryCard(`${category.name}`));
-      const children = Hitlist.createCardsWithLevel1(category.children);
-      children.forEach(child => groupContainer.appendChild(child));
+      const mainCategoryCard = Hitlist.createCategoryCard(`${category.name}`);
+      mainCategoryCard.classList.add('main-category-card');
+      groupContainer.appendChild(mainCategoryCard);
+
+      const children = Hitlist.createCardsWithLevel(category.children);
+      children.forEach(child => {
+        child.classList.add('hidden');
+        groupContainer.appendChild(child)
+      });
       categoriesContainer.appendChild(groupContainer);
+
+      mainCategoryCard.onclick = (e) => {
+        [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
+          if (item !== mainCategoryCard) {
+            item.classList.toggle('hidden');
+          }
+        });
+      }
     });
 
     //Hitlist.createCardsWithLevel(main, categoriesContainer);
@@ -461,23 +475,14 @@ class Hitlist {
     }
   }
 
-  static createCardsWithLevel(main, categoriesContainer) {
-    main.forEach(item => {
-      const categoryCard = Hitlist.createCategoryCard(item.name);
-      categoryCard.style.marginLeft = (20 * item.level) + 'px';
-      categoriesContainer.appendChild(categoryCard);
-      Hitlist.createCardsWithLevel(item.children, categoriesContainer);
-    });
-  }
-
-  static createCardsWithLevel1(main) {
+  static createCardsWithLevel(main) {
     const group = [];
 
     main.forEach(item => {
       const categoryCard = Hitlist.createCategoryCard(`${item.name}`);
       categoryCard.style.marginLeft = (20 * item.level) + 'px';
       group.push(categoryCard);
-      group.push(...Hitlist.createCardsWithLevel1(item.children));
+      group.push(...Hitlist.createCardsWithLevel(item.children));
     });
 
     return group;
