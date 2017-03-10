@@ -436,13 +436,15 @@ class Hitlist {
       groupContainer.classList.add("hitlist-tags-group");
 
       const mainCategoryCard = Hitlist.createCategoryCard(category.name);
-      mainCategoryCard.classList.add('category-with-children');
       mainCategoryCard.classList.add("hitlist-tag");
       groupContainer.appendChild(mainCategoryCard);
       categoriesContainer.appendChild(groupContainer);
 
       const children = Hitlist.createCardsWithLevel(category.children, groupContainer);
-      mainCategoryCard.onclick = () => children.forEach(item => item.classList.toggle('hidden-category'));
+      if (children.length > 0) {
+        mainCategoryCard.classList.add('category-with-children');
+        mainCategoryCard.onclick = () => children.forEach(item => item.classList.toggle('hidden-category'));
+      }
     });
 
     categoriesContainer.classList.add("hitlist-tags-container");

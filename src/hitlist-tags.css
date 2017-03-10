@@ -37,15 +37,25 @@ div.hitlist-tag-container {
   background-color: var(--hitlist-default-primary-color) !important;
 }
 
-
-span.hitlist-tag.sub-category-card:before {
+.category-with-children:before {
   content: '';
   position: absolute;
-  top: 7px;
-  left: -15px;
+  top: 8px;
+  left: 7px;
   width: 0;
   height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid black;
+  border-color: var(--hitlist-secondary-text-color) transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+}
+
+.hitlist-tag:not(.category-with-children):before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  position: absolute;
+  top: 33%;
+  left: 30%;
 }
