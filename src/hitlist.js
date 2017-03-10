@@ -436,7 +436,7 @@ class Hitlist {
       groupContainer.classList.add("hitlist-tags-group");
 
       const mainCategoryCard = Hitlist.createCategoryCard(category.name);
-      mainCategoryCard.classList.add('main-category-card');
+      mainCategoryCard.classList.add('category-with-children');
       mainCategoryCard.classList.add("hitlist-tag");
       groupContainer.appendChild(mainCategoryCard);
       categoriesContainer.appendChild(groupContainer);
@@ -476,6 +476,7 @@ class Hitlist {
       const innerChildren = Hitlist.createCardsWithLevel(item.children, container);
 
       if(innerChildren.length > 0) {
+        categoryCard.classList.add('category-with-children');
         categoryCard.onclick = (e) => innerChildren.forEach(item => item.classList.toggle('hidden-category'));
       }
     });

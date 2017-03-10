@@ -33,7 +33,7 @@ div.hitlist-tag-container {
   display: none !important;
 }
 
-.main-category-card:hover {
+.category-with-children:hover {
   background-color: var(--hitlist-default-primary-color) !important;
 }
 
