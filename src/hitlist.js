@@ -434,30 +434,16 @@ class Hitlist {
     main.forEach(category => {
       const groupContainer = document.createElement("div");
       groupContainer.classList.add("hitlist-tags-group");
-      const mainCategoryCard = Hitlist.createCategoryCard(`${category.name}`);
-      groupContainer.appendChild(mainCategoryCard);
 
-      const children = Hitlist.createCardsWithLevel(category.children);
-      children.forEach(child => {
-        child.classList.add('hidden-category');
-        groupContainer.appendChild(child)
-      });
+      const mainCategoryCard = Hitlist.createCategoryCard(category.name);
+      mainCategoryCard.classList.add('main-category-card');
+      mainCategoryCard.classList.add("hitlist-tag");
+      groupContainer.appendChild(mainCategoryCard);
       categoriesContainer.appendChild(groupContainer);
 
-      if (children.length > 0) {
-        mainCategoryCard.classList.add('main-category-card');
-
-        mainCategoryCard.onclick = (e) => {
-          [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
-            if (item !== mainCategoryCard) {
-              item.classList.toggle('hidden-category');
-            }
-          });
-        };
-      }
+      const children = Hitlist.createCardsWithLevel(category.children, groupContainer);
+      mainCategoryCard.onclick = () => children.forEach(item => item.classList.toggle('hidden-category'));
     });
-
-    //Hitlist.createCardsWithLevel(main, categoriesContainer);
 
     categoriesContainer.classList.add("hitlist-tags-container");
     //categoriesContainer.classList.add("hitlist-tags-container--column");
@@ -466,30 +452,45 @@ class Hitlist {
 
   static pushCategoryWithLevel(main, categoryArray, separator, level) {
     if (categoryArray.length == 1) {
-      main.push({name: categoryArray[0], children: [], level});
+      const name = categoryArray[0];
+      main.push({name, children: [], level});
     } else {
       const currentCategory = categoryArray.shift();
       const parent = main.find(cat => cat.name == currentCategory);
       if (parent) {
         Hitlist.pushCategoryWithLevel(parent.children, categoryArray, separator, level + 1)
       } else {
-        main.push({name: [currentCategory, ...categoryArray].join(` ${separator} `), children: [], level});
+        const name = [currentCategory, ...categoryArray].join(` ${separator} `);
+        main.push({name, children: [], level});
       }
     }
   }
 
-  static createCardsWithLevel(main) {
-    const group = [];
+  static createCardsWithLevel(main, container) {
+    const children = [];
 
     main.forEach(item => {
-      const categoryCard = Hitlist.createCategoryCard(`${item.name}`);
-      categoryCard.style.marginLeft = (20 * item.level) + 'px';
-      categoryCard.classList.add('sub-category-card');
-      group.push(categoryCard);
-      group.push(...Hitlist.createCardsWithLevel(item.children));
+      const categoryCard = Hitlist.createSubCategoryCardWithLevel(item.name, item.level);
+      children.push(categoryCard);
+      container.appendChild(categoryCard);
+      const innerChildren = Hitlist.createCardsWithLevel(item.children, container);
+
+      if(innerChildren.length > 0) {
+        categoryCard.onclick = (e) => innerChildren.forEach(item => item.classList.toggle('hidden-category'));
+      }
     });
 
-    return group;
+    return children;
+  }
+
+  static createSubCategoryCardWithLevel(category, level) {
+    let categoryCard = document.createElement("span");
+    categoryCard.innerText = category;
+    categoryCard.classList.add("hitlist-tag");
+    categoryCard.classList.add('sub-category-card');
+    categoryCard.classList.add('hidden-category');
+    categoryCard.style.marginLeft = (20 * level) + 'px';
+    return categoryCard
   }
 }
 
