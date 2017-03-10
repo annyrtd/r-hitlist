@@ -435,7 +435,6 @@ class Hitlist {
       const groupContainer = document.createElement("div");
       groupContainer.classList.add("hitlist-tags-group");
       const mainCategoryCard = Hitlist.createCategoryCard(`${category.name}`);
-      mainCategoryCard.classList.add('main-category-card');
       groupContainer.appendChild(mainCategoryCard);
 
       const children = Hitlist.createCardsWithLevel(category.children);
@@ -445,12 +444,16 @@ class Hitlist {
       });
       categoriesContainer.appendChild(groupContainer);
 
-      mainCategoryCard.onclick = (e) => {
-        [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
-          if (item !== mainCategoryCard) {
-            item.classList.toggle('hidden-category');
-          }
-        });
+      if (children.length > 0) {
+        mainCategoryCard.classList.add('main-category-card');
+
+        mainCategoryCard.onclick = (e) => {
+          [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
+            if (item !== mainCategoryCard) {
+              item.classList.toggle('hidden-category');
+            }
+          });
+        };
       }
     });
 
