@@ -443,7 +443,7 @@ class Hitlist {
     //Hitlist.createCardsWithLevel(main, categoriesContainer);
 
     categoriesContainer.classList.add("hitlist-tags-container");
-    categoriesContainer.classList.add("hitlist-tags-container--column");
+    //categoriesContainer.classList.add("hitlist-tags-container--column");
     cell.appendChild(categoriesContainer);
   }
 

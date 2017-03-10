@@ -15,9 +15,16 @@ div.hitlist-tag-container {
   display: flex;
   flex-wrap: wrap;
 
-  &--column {
+  /*&--column {
     flex-direction: column;
     flex-wrap: nowrap;
-  }
+  }*/
 }
 
+.hitlist-tags-group {
+  margin-right: 16px;
+}
+
+.hitlist-tag {
+  white-space: nowrap;
+}
