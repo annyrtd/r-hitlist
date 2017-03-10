@@ -445,7 +445,22 @@ class Hitlist {
         mainCategoryCard.classList.add('category-with-children');
         mainCategoryCard.classList.add('category-with-children--collapsed');
         mainCategoryCard.onclick = () => {
-          children.forEach(item =>  item.classList.toggle('hidden-category'));
+          //children.forEach(item =>  item.classList.toggle('hidden-category'));
+          /*[].forEach.call(mainCategoryCard.parentNode.childNodes, item =>{
+            if (item !== mainCategoryCard) {
+              item.classList.toggle('hidden-category')
+            }
+          });*/
+          if(mainCategoryCard.classList.contains('category-with-children--collapsed')) {
+            children.forEach(item =>  item.classList.remove('hidden-category'));
+          } else {
+            [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
+              if (item !== mainCategoryCard) {
+                item.classList.add('hidden-category')
+              }
+            });
+          }
+
           mainCategoryCard.classList.toggle('category-with-children--collapsed');
         }
       }
