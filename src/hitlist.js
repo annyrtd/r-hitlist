@@ -443,7 +443,11 @@ class Hitlist {
       const children = Hitlist.createCardsWithLevel(category.children, groupContainer);
       if (children.length > 0) {
         mainCategoryCard.classList.add('category-with-children');
-        mainCategoryCard.onclick = () => children.forEach(item => item.classList.toggle('hidden-category'));
+        mainCategoryCard.classList.add('category-with-children--collapsed');
+        mainCategoryCard.onclick = () => children.forEach(item => {
+          item.classList.toggle('hidden-category');
+          mainCategoryCard.classList.toggle('category-with-children--collapsed');
+        });
       }
     });
 
@@ -479,7 +483,11 @@ class Hitlist {
 
       if(innerChildren.length > 0) {
         categoryCard.classList.add('category-with-children');
-        categoryCard.onclick = (e) => innerChildren.forEach(item => item.classList.toggle('hidden-category'));
+        categoryCard.classList.add('category-with-children--collapsed');
+        categoryCard.onclick = (e) => innerChildren.forEach(item => {
+          item.classList.toggle('hidden-category');
+          categoryCard.classList.toggle('category-with-children--collapsed');
+        });
       }
     });
 
