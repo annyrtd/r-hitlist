@@ -36,6 +36,6 @@ div.hitlist-tag-container {
 .main-category-card {
 
   &:hover {
-    background: var(--hitlist-default-primary-color);
+    background-color: var(--hitlist-default-primary-color) !important;
   }
 }
