@@ -283,6 +283,7 @@
     background-color: var(--hitlist-primary-background-color);
     font-size: 12px;
     display: flex;
+    position: relative;
   }
 
   & .hitlist-nav-prev.disabled,

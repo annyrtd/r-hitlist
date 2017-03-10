@@ -39,12 +39,14 @@ div.hitlist-tag-container {
 
 
 span.hitlist-tag.sub-category-card:before {
-  content: '_';
+  content: '';
   position: absolute;
   top: 0;
   left: -15px;
   font-size: 12px;
   border-left: 1px solid black;
+  border-bottom: 1px solid black;
   height: 16px;
+  width: 8px;
   z-index: 0;
 }
