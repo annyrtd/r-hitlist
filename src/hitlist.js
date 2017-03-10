@@ -484,12 +484,12 @@ class Hitlist {
     main.forEach(item => {
       const categoryCard = Hitlist.createCategoryCard(`${item.name}`);
       categoryCard.style.marginLeft = (20 * item.level) + 'px';
+      categoryCard.classList.add('sub-category-card');
       group.push(categoryCard);
       group.push(...Hitlist.createCardsWithLevel(item.children));
     });
 
     return group;
-
   }
 }
 

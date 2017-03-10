@@ -33,9 +33,18 @@ div.hitlist-tag-container {
   display: none !important;
 }
 
-.main-category-card {
+.main-category-card:hover {
+  background-color: var(--hitlist-default-primary-color) !important;
+}
 
-  &:hover {
-    background-color: var(--hitlist-default-primary-color) !important;
-  }
+
+span.hitlist-tag.sub-category-card:before {
+  content: '_';
+  position: absolute;
+  top: 0;
+  left: -15px;
+  font-size: 12px;
+  border-left: 1px solid black;
+  height: 16px;
+  z-index: 0;
 }
