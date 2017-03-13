@@ -445,18 +445,16 @@ class Hitlist {
         mainCategoryCard.classList.add('category-with-children');
         mainCategoryCard.classList.add('category-with-children--collapsed');
         mainCategoryCard.onclick = () => {
-          //children.forEach(item =>  item.classList.toggle('hidden-category'));
-          /*[].forEach.call(mainCategoryCard.parentNode.childNodes, item =>{
-            if (item !== mainCategoryCard) {
-              item.classList.toggle('hidden-category')
-            }
-          });*/
+          // TODO: make it work for more than 3 levels
           if(mainCategoryCard.classList.contains('category-with-children--collapsed')) {
             children.forEach(item =>  item.classList.remove('hidden-category'));
           } else {
             [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
               if (item !== mainCategoryCard) {
-                item.classList.add('hidden-category')
+                item.classList.add('hidden-category');
+                if (item.classList.contains('category-with-children')) {
+                  item.classList.add('category-with-children--collapsed');
+                }
               }
             });
           }
@@ -487,6 +485,7 @@ class Hitlist {
     }
   }
 
+  // TODO: make it work for more than 3 levels
   static createCardsWithLevel(main, container) {
     const children = [];
 
