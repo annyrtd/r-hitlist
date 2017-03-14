@@ -27,10 +27,18 @@ div.hitlist-tag-container {
 
 .hitlist-tag {
   white-space: nowrap;
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+  height: 26px;
+  overflow: hidden;
 }
 
 .hidden-category {
-  display: none !important;
+  height: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  opacity: 0;
 }
 
 .category-with-children {
