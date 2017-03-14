@@ -441,7 +441,6 @@ class Hitlist {
       mainCategoryCard.classList.add("hitlist-tag");
       groupContainer.appendChild(mainCategoryCard);
       categoriesContainer.appendChild(groupContainer);
-      mainCategoryCard.style.width = mainCategoryCard.offsetWidth + 'px';
 
       const children = Hitlist.createCardsWithLevel(category.children, groupContainer);
       if (children.length <= 0) {
@@ -467,6 +466,8 @@ class Hitlist {
           mainCategoryCard.classList.toggle('category-with-children--collapsed');
         }
       }
+
+      mainCategoryCard.style.width = mainCategoryCard.offsetWidth + 'px';
     });
 
     categoriesContainer.classList.add("hitlist-tags-container");
@@ -509,6 +510,9 @@ class Hitlist {
           categoryCard.classList.toggle('category-with-children--collapsed');
         }
       }
+
+      categoryCard.style.width = categoryCard.offsetWidth + 'px';
+      categoryCard.classList.add('hidden-category');
     });
 
     return children;
@@ -519,7 +523,7 @@ class Hitlist {
     categoryCard.innerText = category;
     categoryCard.classList.add("hitlist-tag");
     categoryCard.classList.add('sub-category-card');
-    categoryCard.classList.add('hidden-category');
+    //categoryCard.classList.add('hidden-category');
     categoryCard.style.marginLeft = (20 * level) + 'px';
     return categoryCard
   }

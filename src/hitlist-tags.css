@@ -35,9 +35,9 @@ div.hitlist-tag-container {
   height: 0;
   padding: 0 !important;
   margin: 0 !important;
-  border: 0 !important;
+  /*border: 0 !important;*/
   opacity: 0;
-  width: 0;
+  width: 0 !important;
 }
 
 .category-with-children {
