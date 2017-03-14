@@ -576,13 +576,12 @@ class Hitlist {
       categoryCard.classList.add("hitlist-tag");
       container.appendChild(categoryCard);
 
-      const children = Hitlist.createCardsForTree(category.children, container);
-      if (children.length <= 0) {
+      if (category.children.length <= 0) {
         categoryCard.classList.add('single-category');
       } else {
         categoryCard.classList.add('category-with-children');
         categoryCard.classList.add('category-with-children--collapsed');
-
+        Hitlist.createCardsForTree(category.children, container);
 
 
         /*categoryCard.onclick = () => {
