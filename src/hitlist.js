@@ -441,7 +441,7 @@ class Hitlist {
       mainCategoryCard.classList.add("hitlist-tag");
       groupContainer.appendChild(mainCategoryCard);
       categoriesContainer.appendChild(groupContainer);
-      mainCategoryCard.style.width = mainCategoryCard.clientWidth + 'px';
+      mainCategoryCard.style.width = mainCategoryCard.offsetWidth + 'px';
 
       const children = Hitlist.createCardsWithLevel(category.children, groupContainer);
       if (children.length <= 0) {
