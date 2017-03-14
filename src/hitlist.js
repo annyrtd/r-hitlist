@@ -468,6 +468,7 @@ class Hitlist {
       }
 
       mainCategoryCard.style.width = mainCategoryCard.offsetWidth + 'px';
+      mainCategoryCard.style.transition = 'all 0.3s ease-in-out';
     });
 
     categoriesContainer.classList.add("hitlist-tags-container");
@@ -513,6 +514,7 @@ class Hitlist {
 
       categoryCard.style.width = categoryCard.offsetWidth + 'px';
       categoryCard.classList.add('hidden-category');
+      categoryCard.style.transition = 'all 0.3s ease-in-out';
     });
 
     return children;

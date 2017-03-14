@@ -26,7 +26,6 @@ div.hitlist-tag-container {
 .hitlist-tag {
   white-space: nowrap;
   opacity: 1;
-  transition: all 0.3s ease-in-out;
   height: 26px;
   overflow: hidden;
 }
