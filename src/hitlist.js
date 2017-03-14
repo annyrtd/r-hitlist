@@ -441,13 +441,15 @@ class Hitlist {
       categoriesContainer.appendChild(groupContainer);
 
       const children = Hitlist.createCardsWithLevel(category.children, groupContainer);
-      if (children.length > 0) {
+      if (children.length <= 0) {
+        mainCategoryCard.classList.add('single-category');
+      } else {
         mainCategoryCard.classList.add('category-with-children');
         mainCategoryCard.classList.add('category-with-children--collapsed');
         mainCategoryCard.onclick = () => {
           // TODO: make it work for more than 3 levels
-          if(mainCategoryCard.classList.contains('category-with-children--collapsed')) {
-            children.forEach(item =>  item.classList.remove('hidden-category'));
+          if (mainCategoryCard.classList.contains('category-with-children--collapsed')) {
+            children.forEach(item => item.classList.remove('hidden-category'));
           } else {
             [].forEach.call(mainCategoryCard.parentNode.childNodes, item => {
               if (item !== mainCategoryCard) {
@@ -495,7 +497,9 @@ class Hitlist {
       container.appendChild(categoryCard);
       const innerChildren = Hitlist.createCardsWithLevel(item.children, container);
 
-      if(innerChildren.length > 0) {
+      if (innerChildren.length <= 0) {
+        categoryCard.classList.add('single-category');
+      } else {
         categoryCard.classList.add('category-with-children');
         categoryCard.classList.add('category-with-children--collapsed');
         categoryCard.onclick = () => {

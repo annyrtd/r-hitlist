@@ -56,7 +56,7 @@ div.hitlist-tag-container {
   }
 }
 
-.hitlist-tag:not(.category-with-children):before {
+.single-category:before {
   content: '';
   width: 6px;
   height: 6px;
