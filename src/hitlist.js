@@ -544,18 +544,18 @@ class Hitlist {
     Hitlist.createCardsForTree(main, categoriesContainer);
   }
 
-  static pushCategoryWithLevel(main, categoryArray, separator, level, index) {
+  static pushCategoryWithLevel(main, categoryArray, separator, level, index, parentId) {
     if (categoryArray.length == 1) {
       const name = categoryArray[0];
-      main.push({name, children: [], level, id: index + '_' + level});
+      main.push({name, children: [], level, id: index, parentId});
     } else {
       const currentCategory = categoryArray.shift();
       const parent = main.find(cat => cat.name == currentCategory);
       if (parent) {
-        Hitlist.pushCategoryWithLevel(parent.children, categoryArray, separator, level + 1, index)
+        Hitlist.pushCategoryWithLevel(parent.children, categoryArray, separator, level + 1, index,  parent.id)
       } else {
         const name = [currentCategory, ...categoryArray].join(` ${separator} `);
-        main.push({name, children: [], level, id: index + '_' + level});
+        main.push({name, children: [], level, id: index, parentId});
       }
     }
   }
@@ -572,7 +572,7 @@ class Hitlist {
         categoryContainer.appendChild(groupContainer);
       }
 
-      const categoryCard = Hitlist.createCategoryCardWithLevel(category.name, category.level, category.id);
+      const categoryCard = Hitlist.createCategoryCardWithLevel(category.name, category.level, category.id, category.parentId);
       categoryCard.classList.add("hitlist-tag");
       container.appendChild(categoryCard);
 
@@ -617,12 +617,13 @@ class Hitlist {
     });
   }
 
-  static createCategoryCardWithLevel(category, level, id) {
+  static createCategoryCardWithLevel(category, level, id, parentId) {
     let categoryCard = document.createElement("span");
     categoryCard.innerText = category;
     categoryCard.classList.add("hitlist-tag");
     categoryCard.style.marginLeft = (20 * level) + 'px';
     categoryCard.setAttribute('data-id', id);
+    categoryCard.setAttribute('data-parent-id', parentId);
     return categoryCard
   }
 }
