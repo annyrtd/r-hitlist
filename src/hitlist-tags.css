@@ -26,7 +26,6 @@ div.hitlist-tag-container {
 }
 
 .hitlist-tag {
-  padding-left: 24px !important;
   white-space: nowrap;
 }
 
@@ -35,6 +34,8 @@ div.hitlist-tag-container {
 }
 
 .category-with-children {
+  padding-left: 24px !important;
+
   &:hover {
     background-color: var(--hitlist-default-primary-color) !important;
   }
@@ -56,13 +57,18 @@ div.hitlist-tag-container {
   }
 }
 
-.single-category:before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  position: absolute;
-  top: 8px;
-  left: 8px;
+.single-category {
+  padding-left: 24px !important;
+
+  &:before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+
 }
