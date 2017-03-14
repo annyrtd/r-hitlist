@@ -421,7 +421,7 @@ class Hitlist {
   }
 
 
-  static addCategoriesToComment__tree(source, cell, index, separator) {
+/*  static addCategoriesToComment__tree(source, cell, index, separator) {
     let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
 
     let main = [];
@@ -494,7 +494,7 @@ class Hitlist {
     const children = [];
 
     main.forEach(item => {
-      const categoryCard = Hitlist.createSubCategoryCardWithLevel(item.name, item.level);
+      const categoryCard = Hitlist.createCategoryCardWithLevel(item.name, item.level);
       children.push(categoryCard);
       container.appendChild(categoryCard);
       const innerChildren = Hitlist.createCardsWithLevel(item.children, container);
@@ -518,13 +518,112 @@ class Hitlist {
     return children;
   }
 
-  static createSubCategoryCardWithLevel(category, level) {
+  static createCategoryCardWithLevel(category, level) {
     let categoryCard = document.createElement("span");
     categoryCard.innerText = category;
     categoryCard.classList.add("hitlist-tag");
     categoryCard.classList.add('sub-category-card');
     //categoryCard.classList.add('hidden-category');
     categoryCard.style.marginLeft = (20 * level) + 'px';
+    return categoryCard
+  }*/
+
+  static addCategoriesToComment__tree(source, cell, index, separator) {
+    let categories = source.querySelectorAll(".yui3-datatable-cell.reportal-hitlist-categories")[index].innerText.split(", ");
+
+    let main = [];
+    categories
+      .map(categoryArray => categoryArray.split(separator).map(category => category.trim()))
+      .sort((first, second) => first.length - second.length)
+      .forEach((categoryArray, index) => Hitlist.pushCategoryWithLevel(main, categoryArray, separator, 0, index));
+
+    let categoriesContainer = document.createElement("div");
+    categoriesContainer.classList.add("hitlist-tags-container");
+    cell.appendChild(categoriesContainer);
+
+    Hitlist.createCardsForTree(main, categoriesContainer);
+  }
+
+  static pushCategoryWithLevel(main, categoryArray, separator, level, index) {
+    if (categoryArray.length == 1) {
+      const name = categoryArray[0];
+      main.push({name, children: [], level, id: index + '_' + level});
+    } else {
+      const currentCategory = categoryArray.shift();
+      const parent = main.find(cat => cat.name == currentCategory);
+      if (parent) {
+        Hitlist.pushCategoryWithLevel(parent.children, categoryArray, separator, level + 1, index)
+      } else {
+        const name = [currentCategory, ...categoryArray].join(` ${separator} `);
+        main.push({name, children: [], level, id: index + '_' + level});
+      }
+    }
+  }
+
+  static createCardsForTree(main, categoryContainer) {
+    let container = categoryContainer;
+
+    main.forEach(category => {
+      // Create container for one category stack
+      if (category.level == 0) {
+        const groupContainer = document.createElement("div");
+        container = groupContainer;
+        groupContainer.classList.add("hitlist-tags-group");
+        categoryContainer.appendChild(groupContainer);
+      }
+
+      const categoryCard = Hitlist.createCategoryCardWithLevel(category.name, category.level, category.id);
+      categoryCard.classList.add("hitlist-tag");
+      container.appendChild(categoryCard);
+
+      const children = Hitlist.createCardsForTree(category.children, container);
+      if (children.length <= 0) {
+        categoryCard.classList.add('single-category');
+      } else {
+        categoryCard.classList.add('category-with-children');
+        categoryCard.classList.add('category-with-children--collapsed');
+
+
+
+        /*categoryCard.onclick = () => {
+          if (categoryCard.classList.contains('category-with-children--collapsed')) {
+            const children = [];
+          } else {
+            [].forEach.call(categoryCard.parentNode.childNodes, item => {
+              if (item !== categoryCard) {
+                item.classList.add('hidden-category');
+                if (item.classList.contains('category-with-children')) {
+                  item.classList.add('category-with-children--collapsed');
+                }
+              }
+            });
+          }
+
+          categoryCard.classList.toggle('category-with-children--collapsed');
+        };
+
+        categoryCard.onclick = () => {
+          innerChildren.forEach(item => item.classList.toggle('hidden-category'));
+          categoryCard.classList.toggle('category-with-children--collapsed');
+        };*/
+
+
+
+      }
+      categoryCard.style.width = categoryCard.offsetWidth + 'px';
+      /*if (category.level > 0) {
+        categoryCard.classList.add('hidden-category');
+      }*/
+      categoryCard.style.transition = 'all 0.3s ease-in-out';
+    });
+  }
+
+  static createCategoryCardWithLevel(category, level, id) {
+    let categoryCard = document.createElement("span");
+    categoryCard.innerText = category;
+    categoryCard.classList.add("hitlist-tag");
+    categoryCard.style.marginLeft = (20 * level) + 'px';
+    categoryCard.setAttribute('data-id', id);
     return categoryCard
   }
 }
