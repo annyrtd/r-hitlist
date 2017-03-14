@@ -431,6 +431,7 @@ class Hitlist {
       .forEach(categoryArray => Hitlist.pushCategoryWithLevel(main, categoryArray, separator, 0));
 
     let categoriesContainer = document.createElement("div");
+    categoriesContainer.classList.add("hitlist-tags-container");
     cell.appendChild(categoriesContainer);
 
     main.forEach(category => {
@@ -470,9 +471,6 @@ class Hitlist {
       mainCategoryCard.style.width = mainCategoryCard.offsetWidth + 'px';
       mainCategoryCard.style.transition = 'all 0.3s ease-in-out';
     });
-
-    categoriesContainer.classList.add("hitlist-tags-container");
-    //categoriesContainer.classList.add("hitlist-tags-container--column");
   }
 
   static pushCategoryWithLevel(main, categoryArray, separator, level) {
