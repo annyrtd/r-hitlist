@@ -431,6 +431,8 @@ class Hitlist {
       .forEach(categoryArray => Hitlist.pushCategoryWithLevel(main, categoryArray, separator, 0));
 
     let categoriesContainer = document.createElement("div");
+    cell.appendChild(categoriesContainer);
+
     main.forEach(category => {
       const groupContainer = document.createElement("div");
       groupContainer.classList.add("hitlist-tags-group");
@@ -439,6 +441,7 @@ class Hitlist {
       mainCategoryCard.classList.add("hitlist-tag");
       groupContainer.appendChild(mainCategoryCard);
       categoriesContainer.appendChild(groupContainer);
+      mainCategoryCard.style.width = mainCategoryCard.clientWidth + 'px';
 
       const children = Hitlist.createCardsWithLevel(category.children, groupContainer);
       if (children.length <= 0) {
@@ -468,7 +471,6 @@ class Hitlist {
 
     categoriesContainer.classList.add("hitlist-tags-container");
     //categoriesContainer.classList.add("hitlist-tags-container--column");
-    cell.appendChild(categoriesContainer);
   }
 
   static pushCategoryWithLevel(main, categoryArray, separator, level) {
