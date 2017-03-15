@@ -622,14 +622,16 @@ class Hitlist {
 
     if (isCollapsed) {
       children.forEach(item => item.classList.remove('hidden-category'));
+      categoryCard.classList.remove('category-with-children--collapsed');
     } else {
       children.forEach(item => {
         item.classList.add('hidden-category');
-        Hitlist.collapseCategory(item, isCollapsed)
+        if (item.classList.contains('category-with-children')) {
+          Hitlist.collapseCategory(item, isCollapsed);
+        }
       });
+      categoryCard.classList.add('category-with-children--collapsed');
     }
-
-    categoryCard.classList.toggle('category-with-children--collapsed');
   }
 
   static createCategoryCardWithLevel(category, level, id, parentId) {
