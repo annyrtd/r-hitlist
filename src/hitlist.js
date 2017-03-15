@@ -469,6 +469,9 @@ class Hitlist {
       container.appendChild(categoryCard);
 
       if (category.children.length <= 0) {
+        if(category.level == 0) {
+          return;
+        }
         categoryCard.classList.add('single-category');
       } else {
         categoryCard.classList.add('category-with-children');
