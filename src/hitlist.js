@@ -605,7 +605,7 @@ class Hitlist {
           categoryCard.classList.toggle('category-with-children--collapsed');
         };*/
 
-        categoryCard.onclick = () => Hitlist.collapseCategory(categoryCard)
+        categoryCard.onclick = () => Hitlist.collapseCategory(categoryCard, categoryCard.classList.contains('category-with-children--collapsed'))
       }
 
       categoryCard.style.width = categoryCard.offsetWidth + 'px';
@@ -616,16 +616,16 @@ class Hitlist {
     });
   }
 
-  static collapseCategory(categoryCard) {
+  static collapseCategory(categoryCard, isCollapsed) {
     const container = categoryCard.parentNode;
     const children = container.querySelectorAll(`[data-parent-id="${categoryCard.getAttribute('data-id')}"]`);
 
-    if (categoryCard.classList.contains('category-with-children--collapsed')) {
+    if (isCollapsed) {
       children.forEach(item => item.classList.remove('hidden-category'));
     } else {
       children.forEach(item => {
         item.classList.add('hidden-category');
-        Hitlist.collapseCategory(item)
+        Hitlist.collapseCategory(item, isCollapsed)
       });
     }
 
