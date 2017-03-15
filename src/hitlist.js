@@ -583,7 +583,6 @@ class Hitlist {
         categoryCard.classList.add('category-with-children--collapsed');
         Hitlist.createCardsForTree(category.children, container);
 
-
         /*categoryCard.onclick = () => {
           if (categoryCard.classList.contains('category-with-children--collapsed')) {
             const children = [];
@@ -606,15 +605,27 @@ class Hitlist {
           categoryCard.classList.toggle('category-with-children--collapsed');
         };*/
 
-
-
+        categoryCard.onclick = () => Hitlist.collapseCategory(categoryCard)
       }
+
       categoryCard.style.width = categoryCard.offsetWidth + 'px';
-      /*if (category.level > 0) {
+      if (category.level > 0) {
         categoryCard.classList.add('hidden-category');
-      }*/
+      }
       categoryCard.style.transition = 'all 0.3s ease-in-out';
     });
+  }
+
+  static collapseCategory(categoryCard) {
+    const container = categoryCard.parentNode;
+    const children = container.querySelectorAll(`[data-parent-id=${categoryCard.getAttribute('data-id')}]`);
+    children.forEach(item => item.classList.toggle('hidden-category'));
+
+    if (!categoryCard.classList.contains('category-with-children--collapsed')) {
+      children.forEach(item => Hitlist.collapseCategory(item));
+    }
+
+    categoryCard.classList.toggle('category-with-children--collapsed');
   }
 
   static createCategoryCardWithLevel(category, level, id, parentId) {
@@ -623,7 +634,9 @@ class Hitlist {
     categoryCard.classList.add("hitlist-tag");
     categoryCard.style.marginLeft = (20 * level) + 'px';
     categoryCard.setAttribute('data-id', id);
-    categoryCard.setAttribute('data-parent-id', parentId);
+    if (parentId !== undefined) {
+      categoryCard.setAttribute('data-parent-id', parentId);
+    }
     return categoryCard
   }
 }
