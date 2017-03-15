@@ -618,11 +618,15 @@ class Hitlist {
 
   static collapseCategory(categoryCard) {
     const container = categoryCard.parentNode;
-    const children = container.querySelectorAll(`[data-parent-id=${categoryCard.getAttribute('data-id')}]`);
-    children.forEach(item => item.classList.toggle('hidden-category'));
+    const children = container.querySelectorAll(`[data-parent-id="${categoryCard.getAttribute('data-id')}"]`);
 
-    if (!categoryCard.classList.contains('category-with-children--collapsed')) {
-      children.forEach(item => Hitlist.collapseCategory(item));
+    if (categoryCard.classList.contains('category-with-children--collapsed')) {
+      children.forEach(item => item.classList.remove('hidden-category'));
+    } else {
+      children.forEach(item => {
+        item.classList.add('hidden-category');
+        Hitlist.collapseCategory(item)
+      });
     }
 
     categoryCard.classList.toggle('category-with-children--collapsed');
