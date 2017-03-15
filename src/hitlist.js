@@ -458,6 +458,9 @@ class Hitlist {
     main.forEach(category => {
       // Create container for one category stack
       if (category.level == 0) {
+        if (category.name.trim() == '-') {
+          return;
+        }
         const groupContainer = document.createElement("div");
         container = groupContainer;
         groupContainer.classList.add("hitlist-tags-group");
